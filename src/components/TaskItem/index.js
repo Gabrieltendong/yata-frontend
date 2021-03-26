@@ -7,10 +7,13 @@ import '../../App.css'
 class TaskItem extends Component {
 
     render() {
-        const { item, handleCompleted, handleRemoveTask } = this.props
+        const { item, handleCompleted, handleRemoveTask, handleShowDetail } = this.props
         console.log('item', item)
         return (
-            <div  className = "menuItem">
+            <div  
+                className = "menuItem"
+                // onClick = {() => handleShowDetail(item)}
+            >
                 <button 
                     className = {item.isActive?"btnRadio":"btn-gradient"}
                     onClick = {handleCompleted}

@@ -44,13 +44,14 @@ body{
   color: #555
 }
 .App-content-item{
-  border-radius: 25px;
+  border-radius: 5px;
 }
 .App-content-card{
   min-height: 50px;
   max-height: 500px;
   width: 100%;
   border-radius: 5px;
+  overflow: hidden;
   margin-top: 30px;
   background-color: white;
 }
@@ -59,7 +60,9 @@ body{
   height: 50px;
   border-bottom: 1px solid rgb(206, 206, 206);
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
+  border-radius: 5px;
+  overflow: hidden;
   background-color: white;
 }
 .menuItem:hover{
@@ -135,7 +138,13 @@ body{
 
 
 /* ------------------------------- MOBILE APP RESPONSIVE ---------------------- */
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1050px) {
+  .App-content {
+      width: 70%;
+      min-height: 300px;
+  }
+}
+@media only screen and (max-width: 700px) {
   .App-header {
     height: 200px;
     background-image: url('./assets/images/bg-mobile-light.jpg');
@@ -144,7 +153,7 @@ body{
   }
   .App-content {
     width: 90%;
-    min-height: 500px;
+    min-height: 200px;
     margin-top: -170px;
     font-size: 0.7em;
   }
@@ -161,7 +170,7 @@ body{
   .mobile-tabs{
     display: block;
     height: 50px;
-    width: 78%;
+    /* width: 78%; */
     background-color: white;
     display: flex;
     flex-direction: row;
@@ -170,11 +179,13 @@ body{
     padding: 0 20px;
     margin-top: 20px;
     border-radius: 5px;
-    position: fixed;
+    /* position: fixed; */
     bottom: 50px;
   }
   .App-footer{
-    position: fixed;
+    /* position: fixed; */
+    margin-top: 10px;
+    display: block;
     bottom: 10px;
   }
   .btnClose{

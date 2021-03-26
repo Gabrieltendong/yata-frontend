@@ -29,7 +29,6 @@ class AddTaks extends Component {
                             className = "input-title"
                             onChange = {(e) => onChange(e, 'title')}
                         />
-                        <p>Titre obligatoire</p>
                         <p className = "label">Description</p>
                         <textarea
                             value = {description}
