@@ -7,7 +7,8 @@ import '../../App.css'
 class TaskItem extends Component {
 
     render() {
-        const { item, handleCompleted } = this.props
+        const { item, handleCompleted, handleRemoveTask } = this.props
+        console.log('item', item)
         return (
             <div  className = "menuItem">
                 <button 
@@ -17,7 +18,10 @@ class TaskItem extends Component {
                     <img src = {icon_check} className = "icon-check" />
                 </button>
                 <span className = {`labelMenuItem ${!item.isActive && 'line-through'}`}>{item.title}</span>
-                <button className = "btnClose">
+                <button 
+                    className = "btnClose"
+                    onClick = {handleRemoveTask}
+                >
                     <img src = {icon_close} className = "icon-close" />
                 </button>
             </div>

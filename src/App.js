@@ -5,13 +5,14 @@ import icon_circle from './assets/images/circle-regular.svg'
 import './App.css';
 import AddTaks from './components/AddTaks';
 
-import { getAllTask, addTask } from './api'
+import { getAllTask, addTask, removeTask, removeAllTask, updateTask } from './api'
 import TaskItem from './components/TaskItem';
 
 export default class componentName extends Component {
   state = {
     listTask: [],
     memoryListTask: [],
+    selectedTabs: '',
     isVisible: false,
     title: '',
     description: ''
@@ -25,7 +26,8 @@ export default class componentName extends Component {
     const res = await getAllTask()
     this.setState({
       listTask: res,
-      memoryListTask: res
+      memoryListTask: res,
+      selectedTabs: 'all'
     })
   }
 
@@ -64,37 +66,68 @@ export default class componentName extends Component {
 
   getActiveTask = () => {
     const listActiveTask = this.state.memoryListTask.filter((task) => task.isActive)
-    this.setState({listTask: listActiveTask})
+    this.setState({
+      listTask: listActiveTask,
+      selectedTabs: 'active'
+    })
   }
 
   getCompletedTask = () => {
     const listActiveTask = this.state.memoryListTask.filter((task) => !task.isActive)
-    this.setState({listTask: listActiveTask})
+    this.setState({
+      listTask: listActiveTask,
+      selectedTabs: 'completed'
+    })
   }
 
-  handleCompleted = (item) => {
-    this.state.listTask.map((task, index) => {
+  handleCompleted = async (item) => {
+    const { selectedTabs } = this.state
+    this.state.listTask.map(async (task, index) => {
       if(item.id == task.id){
         item.isActive = !item.isActive
+        const res = await updateTask(item._id, item)
+        console.log(res)
+        if(selectedTabs == 'active'){
+          this.getActiveTask()
+        }
+        else if(selectedTabs == 'completed'){
+          this.getCompletedTask()
+        }
         this.forceUpdate()
       }
     })
   }
 
-  renderItem = (item) => {
+  handleRemoveTask = async (taskId) => {
+    const res = await removeTask(taskId)
+    if(res.status == 200) this.loadTasks()
+  }
+
+  handleRemoveAllTask = async () => {
+    const res = await removeAllTask()
+    if(res.status == 200) this.loadTasks()
+  } 
+
+  renderItem = (item, index) => {
     return(
       <TaskItem 
+        key = {index}
         item = {item}
         handleCompleted = {() => this.handleCompleted(item)}
+        handleRemoveTask = {() => this.handleRemoveTask(item._id)}
       />
     )
   }
 
   render() {
-    const { isVisible } = this.state
+    const { isVisible, selectedTabs, memoryListTask, title, description } = this.state
+    const numActiveTask = memoryListTask.filter((task) => task.isActive).length
+    console.log('data', memoryListTask)
     return (
       <div className="App">
         <AddTaks
+          title = {title}
+          description = {description}
           isVisible = {isVisible}
           toggle = {this.toggleModal}
           onChange = {this.handleChange}
@@ -122,25 +155,37 @@ export default class componentName extends Component {
           />
         </div>
         <div className = "App-content-tabs">
-          <span className = "App-firstTest-tabs">4 taches restantes</span>
+          <span className = "App-firstTest-tabs">{numActiveTask} taches restantes</span>
           <a 
-            className = "App-content-btnTabs mobile-hide" 
+            className = {`App-content-btnTabs mobile-hide ${selectedTabs == 'all' && 'selectedTabs'}`} 
             onClick = {this.loadTasks}
           >Tout</a>
           <a 
-            className = "App-content-btnTabs mobile-hide"
+            className = {`App-content-btnTabs mobile-hide ${selectedTabs == 'active' && 'selectedTabs'}`}
             onClick = {this.getActiveTask}
           >Activé</a>
           <a 
-            className = "App-content-btnTabs mobile-hide"
+            className = {`App-content-btnTabs mobile-hide ${selectedTabs == 'completed' && 'selectedTabs'}`}
             onClick = {this.getCompletedTask}
           >Complété</a>
-          <a className = "App-content-btnTabs">Effacer les taches terminées</a>
+          <a 
+            className = "App-content-btnTabs"
+            onClick = {this.handleRemoveAllTask}
+          >Effacer les taches terminées</a>
         </div>
         <div className = "mobile-tabs">
-          <a className = "App-content-btnTabs">Tout</a>
-          <a className = "App-content-btnTabs">Activé</a>
-          <a className = "App-content-btnTabs">Completé</a>
+          <a 
+            className = {`App-content-btnTabs ${selectedTabs == 'all' && 'selectedTabs'}`}
+            onClick = {this.loadTasks}
+          >Tout</a>
+          <a 
+            className = {`App-content-btnTabs ${selectedTabs == 'active' && 'selectedTabs'}`}
+            onClick = {this.getActiveTask}
+          >Activé</a>
+          <a 
+            className = {`App-content-btnTabs ${selectedTabs == 'completed' && 'selectedTabs'}`}
+            onClick = {this.getCompletedTask}
+          >Completé</a>
         </div>
       </div>
       <div className = "App-footer">
