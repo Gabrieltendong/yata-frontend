@@ -1,20 +1,168 @@
 body{
   overflow-x: hidden;
+  background-color: rgb(233, 233, 233);
 }
 
+.App{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 130px;
+}
 .App-header {
+  width: 100%;
   height: 300px;
-  background-image: url('./asstes//images/bg-desktop-light.jpg');
+  background-image: url('./assets/images/bg-desktop-light.jpg');
 }
-
 .App-content {
-  
+  width: 50%;
+  min-height: 500px;
+  margin-top: -200px;
+}
+.App-content-title{
+  color: white;
+}
+.App-content-btn{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 20px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+}
+.App-icon-circle{
+  font-size: 12px;
+  height: 20px;
+  color: #888;
+}
+.App-content-textBtn{
+  margin-left: 10px;
+  font-size: 20px;
+  color: #555
+}
+.App-content-item{
+  border-radius: 5px;
+}
+.App-content-card{
+  min-height: 50px;
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: white;
+}
+.menuItem{
+  display: flex;
+  height: 50px;
+  border-bottom: 1px solid rgb(206, 206, 206);
+  align-items: center;
+  padding: 0 20px;
+  background-color: white;
+}
+.App-content-menuItem:nth-child(1){
+  /* border-radius: 5px; */
+  /* background-color: turquoise; */
+}
+.btnRadio{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: transparent;
+  /* margin-right: 10px; */
+  border:1px solid rgb(184, 184, 184);
+}
+.btn-gradient{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(to bottom,#6ABFFF 40%,#C900F7);
+}
+.labelMenuItem{
+  color: #555;
+  margin-left: 10px;
+  flex: 1;
+}
+.line-through{
+  text-decoration: line-through;
+}
+.App-content-tabs {
+  height: 60px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.App-content-btnTabs{
+  margin: 0 5px;
+}
+.App-content-btnTabs:hover{
+  cursor: pointer;
+  color: blue;
+}
+.App-footer-title{
+  color: #777;
+}
+.mobile-tabs{
+  display: none;
+}
+.btnClose{
+  display: none;
+}
+.icon-check{
+  font-size: 12px;
 }
 
 /* ------------------------------- MOBILE APP RESPONSIVE ---------------------- */
 @media only screen and (max-width: 500px) {
   .App-header {
     height: 200px;
-    background-image: url('./asstes//images/bg-mobile-light.jpg');
+    background-image: url('./assets/images/bg-mobile-light.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .App-content {
+    width: 90%;
+    min-height: 500px;
+    margin-top: -170px;
+    font-size: 0.7em;
+  }
+  .App-content-textBtn{
+    font-size: 1em;
+  }
+  .App-footer-title{
+    color: #777;
+    font-size: 0.7em;
+  }
+  .mobile-hide{
+    display: none;
+  }
+  .mobile-tabs{
+    display: block;
+    height: 50px;
+    width: 78%;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 50px;
+  }
+  .App-footer{
+    position: fixed;
+    bottom: 10px;
+  }
+  .btnClose{
+    display: block;
+    background-color: transparent;
+    border: none;
   }
 }
