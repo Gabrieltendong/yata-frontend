@@ -44,10 +44,11 @@ body{
   color: #555
 }
 .App-content-item{
-  border-radius: 5px;
+  border-radius: 25px;
 }
 .App-content-card{
   min-height: 50px;
+  max-height: 500px;
   width: 100%;
   border-radius: 5px;
   margin-top: 30px;
@@ -61,9 +62,9 @@ body{
   padding: 0 20px;
   background-color: white;
 }
-.menuItem:nth-child(1){
-  /* border-radius: 5px; */
-  background-color: turquoise;
+.menuItem:hover{
+  cursor: pointer;
+  animation: 1s aminItem;
 }
 .btnRadio{
   height: 25px;
@@ -97,8 +98,12 @@ body{
   justify-content: space-between;
   padding: 0 20px;
 }
+.App-firstTest-tabs{
+  color: #888;
+}
 .App-content-btnTabs{
   margin: 0 5px;
+  color: #888;
 }
 .App-content-btnTabs:hover{
   cursor: pointer;
@@ -117,6 +122,15 @@ body{
 }
 .icon-check{
   font-size: 12px;
+}
+
+@keyframes aminItem {
+  0%{
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1.01);
+  }
 }
 
 

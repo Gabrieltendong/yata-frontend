@@ -3,10 +3,10 @@ import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 
 import icon_circle from './assets/images/circle-regular.svg'
 import './App.css';
-import AddTaks from './components/AddTaks';
-
+import AddTaks from './components/AddTaks'; 
 import { getAllTask, addTask, removeTask, removeAllTask, updateTask } from './api'
 import TaskItem from './components/TaskItem';
+import ComfirmRemove from './components/ComfirmRemove';
 
 export default class componentName extends Component {
   state = {
@@ -15,7 +15,8 @@ export default class componentName extends Component {
     selectedTabs: '',
     isVisible: false,
     title: '',
-    description: ''
+    description: '',
+    isVisibleDelete: false
   }
 
   componentDidMount(){
@@ -42,15 +43,19 @@ export default class componentName extends Component {
     this.setState({isVisible: !this.state.isVisible})
   }
 
+  toggleModalDelete = () => {
+    this.setState({isVisibleDelete: !this.state.isVisibleDelete})
+  }
+
   handleAddTask = async () => {
     const { title, description } = this.state
     const data = { title, description }
-    const res = addTask(data)
+    const res = await addTask(data)
     this.setState({
       title: '',
       description: '',
-      listTask:  await getAllTask()
     })
+    this.loadTasks()
     this.toggleModal()
   }
 
@@ -106,12 +111,13 @@ export default class componentName extends Component {
   handleRemoveAllTask = async () => {
     const res = await removeAllTask()
     if(res.status == 200) this.loadTasks()
+    this.toggleModalDelete()
   } 
 
   renderItem = (item, index) => {
     return(
       <TaskItem 
-        key = {index}
+        key = {index                                                                                                                                                                                                                                                                                                                      }
         item = {item}
         handleCompleted = {() => this.handleCompleted(item)}
         handleRemoveTask = {() => this.handleRemoveTask(item._id)}
@@ -120,7 +126,7 @@ export default class componentName extends Component {
   }
 
   render() {
-    const { isVisible, selectedTabs, memoryListTask, title, description } = this.state
+    const { isVisible,isVisibleDelete, selectedTabs, memoryListTask, title, description } = this.state
     const numActiveTask = memoryListTask.filter((task) => task.isActive).length
     console.log('data', memoryListTask)
     return (
@@ -132,6 +138,11 @@ export default class componentName extends Component {
           toggle = {this.toggleModal}
           onChange = {this.handleChange}
           add = {this.handleAddTask}
+        />
+        <ComfirmRemove
+          isVisible = {isVisibleDelete}
+          toggle = {this.toggleModalDelete}
+          handleRemove = {this.handleRemoveAllTask}
         />
       {/* --------------- bloc header --------------- */}
       <header className="App-header">
@@ -170,7 +181,7 @@ export default class componentName extends Component {
           >Complété</a>
           <a 
             className = "App-content-btnTabs"
-            onClick = {this.handleRemoveAllTask}
+            onClick = {this.toggleModalDelete}
           >Effacer les taches terminées</a>
         </div>
         <div className = "mobile-tabs">
